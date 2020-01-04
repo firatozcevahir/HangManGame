@@ -1,0 +1,97 @@
+.vertical-center {
+    margin    : auto;
+    margin-top: 200px;
+    ;
+}
+
+.game-settings-container .radio {
+    position   : relative;
+    cursor     : pointer;
+    line-height: 20px;
+    font-size  : 14px;
+    margin     : 15px;
+}
+
+.game-settings-container .radio .label {
+    position                   : relative;
+    display                    : block;
+    float                      : left;
+    margin-right               : 10px;
+    width                      : 20px;
+    height                     : 20px;
+    border                     : 2px solid #c8ccd4;
+    border-radius              : 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.game-settings-container .radio .label:after {
+    content       : '';
+    position      : absolute;
+    top           : 3px;
+    left          : 3px;
+    width         : 10px;
+    height        : 10px;
+    border-radius : 100%;
+    background    : #225cff;
+    transform     : scale(0);
+    transition    : all 0.2s ease;
+    opacity       : 0.08;
+    pointer-events: none;
+}
+
+.game-settings-container .radio:hover .label:after {
+    transform: scale(3.6);
+}
+
+.game-settings-container input[type="radio"]:checked+.label {
+    border-color: #225cff;
+}
+
+.game-settings-container input[type="radio"]:checked+.label:after {
+    transform : scale(1);
+    transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+    opacity   : 1;
+}
+
+.game-settings-container .cntr {
+    position  : absolute;
+    top       : calc(50% - 10px);
+    left      : 0;
+    width     : 100%;
+    text-align: center;
+}
+
+.game-settings-container .hidden {
+    display: none;
+}
+
+.game-settings-container .credit {
+    position           : fixed;
+    right              : 20px;
+    bottom             : 20px;
+    transition         : all 0.2s ease;
+    -webkit-user-select: none;
+    user-select        : none;
+    opacity            : 0.6;
+}
+
+.game-settings-container .credit img {
+    width: 72px;
+}
+
+.game-settings-container .credit:hover {
+    transform: scale(0.95);
+}
+
+.game-table {
+    border: none;
+    border-collapse: unset;
+    width: 100%;
+    font-size: 3rem;
+  }
+
+  .game-table td{
+      padding:10px;
+      border: 1px solid #e1e1e1;
+      border-bottom: 2px solid #000;
+  }

@@ -1,0 +1,118 @@
+<div class="row">
+  <ng-container *ngIf="step != gameStep">
+    <div class="col-10 col-md-6 shadow vertical-center p-4 game-settings-container">
+      <ng-container *ngIf="step == 0">
+        <h6>Pick a Language</h6>
+        <ng-container *ngIf="isLanguagesLoading">
+          <div class="text-center">Retrieving Languages...</div>
+        </ng-container>
+        <ng-container *ngFor="let language of languages; let i = index;">
+          <label for="{{language.id}}" class="radio">
+            <input type="radio" name="lang" id="{{language.id}}" class="hidden" [checked]="selectedLanguage == language"
+              (change)="pickLanguage(language)" />
+            <span class="label"></span>{{language.name}}
+          </label>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="step == 1">
+        <h6>Select Category</h6>
+        <ng-container *ngIf="isCategoriesLoading">
+          <div class="text-center">Retrieving Categories...</div>
+        </ng-container>
+        <ng-container *ngFor="let category of categories; let i = index;">
+          <label for="{{category.id}}" class="radio">
+            <input type="radio" name="lang" id="{{category.id}}" class="hidden" [checked]="selectedCategory == category"
+              (change)="pickCategory(category)" />
+            <span class="label"></span>{{category.title}}
+          </label>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="step == 2">
+        <h6>Type Your Name</h6>
+        <input class="form-control" type="text" id="name" name="name" minlength="4" maxlength="16" required
+          [(ngModel)]="player.name" #name="ngModel" id="playerName" placeholder="Name" />
+      </ng-container>
+
+      <ng-container>
+        <div class="text-center border-top p-3 mt-2">
+          <button *ngIf="step > 0" type="button" class="btn rounded-circle btn-secondary btn-lg mr-2"
+            (click)="goToPrevStep()">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button *ngIf="step < lastStep" type="button" class="btn rounded-circle btn-primary btn-lg mr-2"
+            (click)="goToNextStep()" [disabled]="isCategoriesLoading || isLanguagesLoading">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <button *ngIf="step == lastStep" type="button" class="btn rounded-circle btn-success btn-lg mr-2"
+            [disabled]="!player.name || player.name.length < 4" (click)="startGame()">
+            <i class="fas fa-play"></i>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="step == gameStep">
+    <div class="col-11 m-auto mt-2 shadow p-4 mt-2">
+      <div class="row">
+        <div class="col-6">
+          <h5 class="float-left">Category : {{selectedCategory.title}}</h5>
+        </div>
+        <div class="col-6 text-right">
+          <span class="badge badge-pill mt-1 mr-1">{{selectedLanguage.name}}</span>
+          <span>
+            <button type="button" class="btn p-0 mr-2" (click)="goToHome()">
+              <i class="fas fa-home"></i>
+            </button>
+          </span>
+          <span>
+            <button type="button" class="btn p-0 mr-2" (click)="startGame()">
+              <i class="fas fa-undo"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <span class="mr-2">
+            Score : {{player.score}}
+          </span>
+          <span class="mr-2">
+            Lives:
+            <ng-container>
+              <i class="fas fa-heart text-danger mr-1" *ngFor="let x of ' '.repeat(player.remainingLife).split('')"></i>
+              <i class="fas fa-heart text-secondary mr-1"
+                *ngFor="let x of ' '.repeat(player.maxTryCount - player.remainingLife).split('')"></i>
+            </ng-container>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <table class="game-table text-center" cellspacing="10">
+            <tbody>
+              <tr>
+                <ng-container *ngFor="let char of hiddenWordArray">
+                  <td>
+                    {{char}}
+                  </td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-12 mt-3 border-top text-center pt-3">
+          <button type="button" class="btn btn-primary btn-sm mr-2 btn-alphabet"
+            *ngFor="let letter of selectedLanguage.alphabet.split('')" #btnLetter
+            (click)="checkALetter(btnLetter, letter)">
+            {{letter}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
